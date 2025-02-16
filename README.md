@@ -75,25 +75,25 @@ jobs:
 
 ### Inputs
 
-| Name        | Description                                                             | Required |
-| ----------- | ----------------------------------------------------------------------- | -------- |
-| `team`      | Team whose approval is required</br>Example: `qa-team`                  | `true`   |
-| `token`     | GitHub access token with 'read:org' scope</br>Example: `secrets.CI_PAT` | `true`   |
-| `approvals` | Count of approvals required</br>Default: `1`                            | `false`  |
-| `pr-number` | Override PR number</br>Example: `42`                                    | `false`  |
+| Name                   | Description                                                              |
+| ---------------------- | ------------------------------------------------------------------------ |
+| `team`</br>(required)  | Team whose approval is required.</br>Example: `qa-team`                  |
+| `token`</br>(required) | GitHub access token with 'read:org' scope.</br>Example: `secrets.CI_PAT` |
+| `approvals`            | Count of approvals required.</br>Default: `1`                            |
+| `pr-number`            | Override PR number.</br>Example: `42`                                    |
 
 </br>
 
 ### Outputs
 
-| Name                   | Description                       |
-| ---------------------- | --------------------------------- |
-| `pr-approvals`         | List of approvals on the PR.      |
-| `pr-approvals-count`   | Count of approvals on the PR.     |
-| `team-approvals`       | List of approvals from the team.  |
-| `team-approvals-count` | Count of approvals from the team. |
-| `team-members`         | List of team members.             |
-| `team-members-count`   | Count of team members.            |
+| Name                   | Description                                              |
+| ---------------------- | -------------------------------------------------------- |
+| `pr-approvals`         | List of approvals on the PR.</br>Example: `[dev-1,qa-1]` |
+| `pr-approvals-count`   | Count of approvals on the PR.</br>Example: `1`           |
+| `team-approvals`       | List of approvals from the team.</br>Example: `[qa-1]`   |
+| `team-approvals-count` | Count of approvals from the team.</br>Example: `1`       |
+| `team-members`         | List of team members.</br>Example: `[dev-1,dev-2,dev-3]` |
+| `team-members-count`   | Count of team members.</br>Example: `1`                  |
 
 </br>
 
