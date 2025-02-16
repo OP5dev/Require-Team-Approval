@@ -86,14 +86,14 @@ jobs:
 
 ### Outputs
 
-| Name                   | Description                                             |
-| ---------------------- | ------------------------------------------------------- |
-| `pr-approvals`         | List of approvals on the PR</br>Example: `[dev-1,qa-1]` |
-| `pr-approvals-count`   | Count of approvals on the PR</br>Example: `1`           |
-| `team-approvals`       | List of approvals from the team</br>Example: `[qa-1]`   |
-| `team-approvals-count` | Count of approvals from the team</br>Example: `1`       |
-| `team-members`         | List of team members</br>Example: `[dev-1,dev-2,dev-3]` |
-| `team-members-count`   | Count of team members</br>Example: `1`                  |
+| Name                   | Description                                              |
+| ---------------------- | -------------------------------------------------------- |
+| `pr-approvals`         | List of approvals on the PR.</br>Example: `[dev-1,qa-1]` |
+| `pr-approvals-count`   | Count of approvals on the PR.</br>Example: `1`           |
+| `team-approvals`       | List of approvals from the team.</br>Example: `[qa-1]`   |
+| `team-approvals-count` | Count of approvals from the team.</br>Example: `1`       |
+| `team-members`         | List of team members.</br>Example: `[dev-1,dev-2,dev-3]` |
+| `team-members-count`   | Count of team members.</br>Example: `1`                  |
 
 </br>
 
