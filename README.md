@@ -65,7 +65,7 @@ jobs:
           token: ${{ secrets.CI_PAT }}
 
       - run: |
-          echo "Got ${{ steps.approval.outputs.team-approvals-count }} / 2 approvals from QA team."
+          echo "Got ${{ steps.approval.outputs.team-approvals-count }} / 2 approvals from QA."
           echo "Got ${{ steps.approval.outputs.pr-approvals-count }} approvals in total."
 ```
 
