@@ -1,7 +1,7 @@
 ---
 name: Require Team Approval
 author: Rishav Dhar (@rdhar)
-description: Require N number of PR approvals from a GitHub team.
+description: Require N number of PR approvals from members of a GitHub team. Used to enforce pre-merge PR checks more explicitly than GitHub's native CODEOWNERS file.
 
 runs:
   using: composite
