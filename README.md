@@ -11,7 +11,7 @@ Require N number of PR approvals from members of a GitHub team. Used to enforce 
 
 ## Usage Examples
 
-### #1 `pull_request` event requiring 1 approval from 2 teams
+### #1 `pull_request` event requiring 1 approval each from 2 teams
 
 The bare minimum configuration requires a GitHub access token with 'read:org' scope and the team name whose approval is required. The default number of approvals is set to 1 on the PR which triggered the workflow and can be called multiple times for different teams.
 
@@ -75,10 +75,10 @@ jobs:
 
 | Name        | Description                                                             | Required |
 | ----------- | ----------------------------------------------------------------------- | -------- |
-| `approvals` | Count of approvals required</br>Default: `1`                            | `false`  |
-| `pr-number` | Override PR number</br>Example: `42`                                    | `false`  |
 | `team`      | Team whose approval is required</br>Example: `qa-team`                  | `true`   |
 | `token`     | GitHub access token with 'read:org' scope</br>Example: `secrets.CI_PAT` | `true`   |
+| `approvals` | Count of approvals required</br>Default: `1`                            | `false`  |
+| `pr-number` | Override PR number</br>Example: `42`                                    | `false`  |
 
 </br>
 
