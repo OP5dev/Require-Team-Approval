@@ -1,0 +1,91 @@
+---
+name: Require Team Approval
+author: Rishav Dhar (@rdhar)
+description: Require N number of PR approvals from a GitHub team.
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        # Check for required tools.
+        which gh > /dev/null 2>&1 || { echo "Please install GitHub CLI before running this action as it is required for interacting with GitHub."; exit 1; }
+        which jq > /dev/null 2>&1 || { echo "Please install jq before running this action as it is required for processing JSON outputs."; exit 1; }
+        if [[ "$GITHUB_SERVER_URL" != "https://github.com" ]]; then echo GH_HOST=$(echo "$GITHUB_SERVER_URL" | sed 's/.*:\/\///') >> "$GITHUB_ENV"; fi
+
+    - shell: bash
+      id: approvals
+      env:
+        GH_API: X-GitHub-Api-Version:2022-11-28
+        GH_TOKEN: ${{ inputs.token }}
+      run: |
+        # Check team approval requirements.
+        # List members of the input team.
+        team_members=$(gh api /orgs/${{ github.repository_owner }}/teams/${{ inputs.team }}/members --header "$GH_API" --method GET --field per_page=100 --paginate --jq '[.[] | .login]')
+        echo "team-members=$team_members" >> "$GITHUB_OUTPUT"
+        echo "team-members-count=$(jq 'length // 0' <<< "$team_members")" >> "$GITHUB_OUTPUT"
+
+        # Throw error if input approvals count exceeds team count.
+        if [[ ${{ inputs.approvals }} -gt $(jq 'length // 0' <<< "$team_members") ]]; then
+          echo "Error: Approvals count exceeds number of team members." >&2
+          exit 1
+        fi
+
+        # List approvals on the pull request.
+        pr_approvals=$(gh api /repos/{owner}/{repo}/pulls/${{ inputs.pr-number }}/reviews --header "$GH_API" --method GET --field per_page=100 --paginate --jq '[.[] | select(.state == "APPROVED") | .user.login]')
+        echo "pr-approvals=$pr_approvals" >> "$GITHUB_OUTPUT"
+        echo "pr-approvals-count=$(jq 'length // 0' <<< "$pr_approvals")" >> "$GITHUB_OUTPUT"
+
+        # List names of team members who approved.
+        team_approvals=$(echo "$pr_approvals" | jq --argjson team_members "$team_members" 'map(select(. as $user | $team_members | index($user)))')
+        echo "team-approvals=$team_approvals" >> "$GITHUB_OUTPUT"
+        echo "team-approvals-count=$(jq 'length // 0' <<< "$team_approvals")" >> "$GITHUB_OUTPUT"
+
+        # Throw error if team approvals are less than required count.
+        if [[ $(jq 'length // 0' <<< "$team_approvals") -lt ${{ inputs.approvals }} ]]; then
+          echo "Error: Required team approvals not met. Needed: ${{ inputs.approvals }}, Found: $(jq 'length // 0' <<< "$team_approvals")." >&2
+          exit 1
+        fi
+
+        # Success message.
+        echo "Success: Required team approvals met. Needed: ${{ inputs.approvals }}, Found: $(jq 'length // 0' <<< "$team_approvals")."
+
+outputs:
+  pr-approvals:
+    description: "List of approvals on the pull request."
+    value: ${{ steps.approvals.outputs.pr-approvals }}
+  pr-approvals-count:
+    description: "Count of approvals on the pull request."
+    value: ${{ steps.approvals.outputs.pr-approvals-count }}
+  team-approvals:
+    description: "List of approvals from the team."
+    value: ${{ steps.approvals.outputs.team-approvals }}
+  team-approvals-count:
+    description: "Count of approvals from the team."
+    value: ${{ steps.approvals.outputs.team-approvals-count }}
+  team-members:
+    description: "List of team members."
+    value: ${{ steps.approvals.outputs.team-members }}
+  team-members-count:
+    description: "Count of team members."
+    value: ${{ steps.approvals.outputs.team-members-count }}
+
+inputs:
+  approvals:
+    required: false
+    description: "Count of approvals required (e.g., 1)."
+    default: 1
+  pr-number:
+    required: false
+    description: "Pull request number (e.g., 42)."
+    default: ${{ github.event.number || github.event.issue.number || github.event.pull_request.number }}
+  team:
+    required: true
+    description: "Team whose approval is required (e.g., qa-team)."
+  token:
+    required: true
+    description: "GitHub access token with 'read:org' scope (e.g., secrets.CI_PAT)."
+
+branding:
+  color: green
+  icon: user-check
