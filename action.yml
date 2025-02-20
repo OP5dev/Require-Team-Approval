@@ -37,7 +37,7 @@ runs:
         echo "pr-approvals-count=$(jq 'length // 0' <<< "$pr_approvals")" >> "$GITHUB_OUTPUT"
 
         # List names of team members who approved.
-        team_approvals=$(echo "$pr_approvals" | jq --argjson team_members "$team_members" 'map(select(. as $user | $team_members | index($user)))')
+        team_approvals=$(echo "$pr_approvals" | jq -c --argjson team_members "$team_members" 'map(select(. as $user | $team_members | index($user)))')
         echo "team-approvals=$team_approvals" >> "$GITHUB_OUTPUT"
         echo "team-approvals-count=$(jq 'length // 0' <<< "$team_approvals")" >> "$GITHUB_OUTPUT"
 
