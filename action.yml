@@ -32,7 +32,7 @@ runs:
         fi
 
         # List approvals on the pull request.
-        pr_approvals=$(gh api /repos/{owner}/{repo}/pulls/${{ inputs.pr-number }}/reviews --header "$GH_API" --method GET --field per_page=100 --paginate --jq '[.[] | select(.state == "APPROVED") | .user.login]')
+        pr_approvals=$(gh api /repos/${{ github.repository }}/pulls/${{ inputs.pr-number }}/reviews --header "$GH_API" --method GET --field per_page=100 --paginate --jq '[.[] | select(.state == "APPROVED") | .user.login]')
         echo "pr-approvals=$pr_approvals" >> "$GITHUB_OUTPUT"
         echo "pr-approvals-count=$(jq 'length // 0' <<< "$pr_approvals")" >> "$GITHUB_OUTPUT"
 
