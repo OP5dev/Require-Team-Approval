@@ -122,4 +122,4 @@ View [all notable changes](https://github.com/op5dev/require-team-approval/relea
 
 - This project is licensed under the permissive [Apache License 2.0](LICENSE "Apache License 2.0.").
 - All works herein are my own, shared of my own volition, and [contributors](https://github.com/op5dev/require-team-approval/graphs/contributors "Contributors.").
-- Copyright 2016-2025 [Rishav Dhar](https://github.com/rdhar "Rishav Dhar's GitHub profile.") — All wrongs reserved.
+- Copyright 2016-present [Rishav Dhar](https://github.com/rdhar "Rishav Dhar's GitHub profile.") — All wrongs reserved.
