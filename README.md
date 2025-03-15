@@ -7,7 +7,7 @@
 
 Require N number of PR approvals from members of a GitHub team. Used to enforce pre-merge PR checks more explicitly than GitHub's native `CODEOWNERS` file.
 
-### View: [Usage Examples](#usage-examples) | [Parameters](#parameters) | [Security](#security) | [Changelog](#changelog) | [License](#license)
+### View: [Usage Examples](#usage-examples) · [Parameters](#parameters) · [Security](#security) · [Changelog](#changelog) · [License](#license)
 
 </br>
 
